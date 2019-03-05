@@ -1,0 +1,25 @@
+{
+  "name": "postgre-vs-mongo",
+  "version": "1.0.0",
+  "description": "Performance testing two databases using JSON data.",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/honzabilek4/postgre-vs-mongo.git"
+  },
+  "keywords": [
+    "json",
+    "mongodb",
+    "postgres",
+    "performance"
+  ],
+  "author": "xbilek18",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/honzabilek4/postgre-vs-mongo/issues"
+  },
+  "homepage": "https://github.com/honzabilek4/postgre-vs-mongo#readme"
+}
