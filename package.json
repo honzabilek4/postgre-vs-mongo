@@ -21,5 +21,11 @@
   "bugs": {
     "url": "https://github.com/honzabilek4/postgre-vs-mongo/issues"
   },
-  "homepage": "https://github.com/honzabilek4/postgre-vs-mongo#readme"
+  "homepage": "https://github.com/honzabilek4/postgre-vs-mongo#readme",
+  "dependencies": {
+    "faker": "^4.1.0",
+    "jest": "^24.1.0",
+    "mongodb": "^3.1.13",
+    "pg": "^7.8.1"
+  }
 }
