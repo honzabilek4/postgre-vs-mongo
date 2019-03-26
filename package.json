@@ -27,5 +27,8 @@
     "jest": "^24.5.0",
     "mongodb": "^3.2.2",
     "pg": "^7.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
   }
 }

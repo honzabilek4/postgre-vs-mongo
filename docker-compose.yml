@@ -11,15 +11,15 @@ services:
       NODE_ENV: development
     volumes: 
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - /usr/src/app/node_modules    
     ports:
-      - 3000:3000
-    command: node ./src/index.js
+      - 3000:3000 
   pg:
     image: postgres:11.2
     restart: always
     environment:
       POSTGRES_PASSWORD: root
+      POSTGRES_DB: test
   mongo: 
     image: mongo:4.0.7
     restart: always
