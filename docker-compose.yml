@@ -4,6 +4,9 @@ services:
   postgre-vs-mongo:
     image: postgre-vs-mongo
     build: .
+    depends_on:
+      - pg
+      - mongo
     environment:
       NODE_ENV: development
     volumes: 
@@ -12,3 +15,14 @@ services:
     ports:
       - 3000:3000
     command: node ./src/index.js
+  pg:
+    image: postgres:11.2
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+  mongo: 
+    image: mongo:4.0.7
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
