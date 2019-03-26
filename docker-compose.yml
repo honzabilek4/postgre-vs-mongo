@@ -18,11 +18,12 @@ services:
     image: postgres:11.2
     restart: always
     environment:
-      POSTGRES_PASSWORD: root
+      POSTGRES_PASSWORD: example
       POSTGRES_DB: test
   mongo: 
     image: mongo:4.0.7
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: test
