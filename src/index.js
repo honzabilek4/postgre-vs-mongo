@@ -1,4 +1,4 @@
-const { PgClient } = require('pg');
+const { Client } = require('pg');
 const connectionString = 'postgresql://postgres:example@pg:5432/test';
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
@@ -6,13 +6,13 @@ const assert = require('assert');
 
 const app = express();
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     res.send('postgres-vs-mongo example app');
 })
 
 
 app.get('/pg', function (req, res) {
-    const client = new PgClient({
+    const client = new Client({
         connectionString: connectionString
     })
     client.connect();
