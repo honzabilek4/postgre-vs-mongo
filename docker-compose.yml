@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  postgre-vs-mongo:
+    image: postgre-vs-mongo
+    build: .
+    environment:
+      NODE_ENV: development
+    volumes: 
+      - .:/usr/src/app
+      - /urs/src/app/node_modules
+    ports:
+      - 3000:3000
+    command: node ./src/index.js
