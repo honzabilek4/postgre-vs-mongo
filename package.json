@@ -24,8 +24,8 @@
   "homepage": "https://github.com/honzabilek4/postgre-vs-mongo#readme",
   "dependencies": {
     "faker": "^4.1.0",
-    "jest": "^24.1.0",
-    "mongodb": "^3.1.13",
-    "pg": "^7.8.1"
+    "jest": "^24.5.0",
+    "mongodb": "^3.2.2",
+    "pg": "^7.9.0"
   }
 }
