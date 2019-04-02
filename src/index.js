@@ -1,8 +1,8 @@
+"use strict";
 const { Client } = require('pg');
 const connectionString = 'postgresql://postgres:example@pg:5432/test';
 const express = require('express');
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
+const MongoService = require('./services/mongdb');
 
 const app = express();
 
@@ -11,27 +11,20 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/pg', function (req, res) {
-    const client = new Client({
-        connectionString: connectionString
-    })
-    client.connect();
+// app.get('/pg', function (req, res) {
+//     const client = new Client({
+//         connectionString: connectionString
+//     })
+//     client.connect();
 
-    client.query('SELECT NOW()', (error, response) => {
-        res.send(response);
-    })
-});
+//     client.query('SELECT NOW()', (error, response) => {
+//         res.send(response);
+//     })
+// });
 
 app.get('/mongo', function (req, res) {
-    const url = 'mongodb://mongo:27017';
-    const dbName = 'test';
-
-    MongoClient.connect(url, function (err, client) {
-        assert.equal(null, err);
-        const db = client.db(dbName);
-        client.close();
-        res.send("Connected successfully to server");
-    });
+    const mongo = new MongoService();
+    res.send(mongo.runCommand());
 });
 
 app.listen(3000);
