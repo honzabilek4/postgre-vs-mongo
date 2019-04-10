@@ -14,4 +14,11 @@ module.exports = class PostgreService {
     const result = await this.client.query('SELECT NOW() as now');
     return result.rows;
   }
+
+  async createData(faker) {
+    this.client.query('CREATE TABLE project (ID serial NOT NULL PRIMARY KEY, data json NOT NULL);');
+    this.client.query('INSERT INTO project (data) VALUES' + faker.getUpdateJson());
+    const result = this.client.query('SELECT * FROM project');
+    return result.rows;
+  }
 };

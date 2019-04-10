@@ -8,7 +8,7 @@ const app = express();
 
 app.get('/', (req, res) => {
   res.send('postgres-vs-mongo example app');
-})
+});
 
 
 app.get('/pg', async function (req, res) {
@@ -25,6 +25,17 @@ app.get('/mongo', function (req, res) {
 app.get('/fake', function (req, res){
   const faker = new FakerService();
   res.send(faker.getUsers(1000000));
+});
+
+app.get('/updateJson', function (req, res) {
+  const faker = new FakerService();
+  res.send(faker.getUpdateJson(100, 50));
+});
+
+app.get('/createData', function (req, res) {
+  const faker = new FakerService();
+  const pg = new PostgreService();
+  res.send(pg.createData(faker));
 });
 
 app.listen(3000);
