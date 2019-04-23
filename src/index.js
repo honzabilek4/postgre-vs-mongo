@@ -17,9 +17,10 @@ app.get('/pg', async function (req, res) {
   res.send(result);
 });
 
-app.get('/mongo', function (req, res) {
+app.get('/mongo', async function (req, res) {
   const mongo = new MongoService();
-  res.send(mongo.runCommand());
+  mongo.connect()
+  res.send("Success.")
 });
 
 app.get('/fake', function (req, res){

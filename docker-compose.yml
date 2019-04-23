@@ -18,12 +18,16 @@ services:
   pg:
     image: postgres:11.2
     restart: always
+    ports:
+    - 5432:5432
     environment:
       POSTGRES_PASSWORD: example
       POSTGRES_DB: test
   mongo: 
     image: mongo:4.0.7
     restart: always
+    ports:
+    - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example

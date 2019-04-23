@@ -6,14 +6,24 @@ module.exports = class MongoService {
     this.CONNECTION_STRING = 'mongodb://mongo:27017';
     this.DB_NAME = 'test';
     this.db = null;
+    this.client = new MongoClient(this.CONNECTION_STRING);
+  }
 
-    MongoClient.connect(this.CONNECTION_STRING, function (err, client) {
-      assert.equal(null, err);
-      this.db = client.db(this.DB_NAME);
-    });
+  async connect() {
+    try {
+      await this.client.connect();
+      console.log("Connected to the server");
+    } catch (e) {
+      console.log(err.stack);
+    }
+  }
+
+  close() {
+    this.client.close();
   }
 
   runCommand() {
-    return "Run test command.";
+
+    return "Running command.";
   }
 }; 
