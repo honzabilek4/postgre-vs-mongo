@@ -12,7 +12,7 @@ module.exports = class MongoService {
   async connect() {
     try {
       await this.client.connect();
-      this.db = this.client.db(this.DB_NAME);
+      this.db = this.client.db(this.DB_NAME,{recordQueryStats:true});
       console.log("Connected to the server");
     } catch (e) {
       console.error(e);
@@ -24,8 +24,16 @@ module.exports = class MongoService {
   }
 
   async runCommand() {
-    const r = await this.db.collection('test').insertOne({ a: 1 });
-    console.log(r);
+    try{
+      // const hrstart = process.hrtime()
+      const r = await this.db.collection('test').insertOne({ a: 1 });
+      // const r = await this.db.collection('test').find({a:{$eq: 1}});      
+      // const hrend = process.hrtime(hrstart)
+      // console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000)
+    }
+    catch(e){
+      console.log(e);
+    }
     return "Running command.";
   }
 }; 

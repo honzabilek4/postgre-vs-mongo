@@ -20,12 +20,15 @@ app.get('/pg', async function (req, res) {
 app.get('/mongo', async function (req, res) {
   const mongo = new MongoService();
   await mongo.connect();
+  const hrstart = process.hrtime()
   await mongo.runCommand();
+  const hrend = process.hrtime(hrstart)
+  console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000)
   await mongo.close();
   res.send("Success!");
 });
 
-app.get('/fake', function (req, res){
+app.get('/fake', function (req, res) {
   const faker = new FakerService();
   res.send(faker.getUsers(1000000));
 });
