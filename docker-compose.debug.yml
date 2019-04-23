@@ -1,0 +1,8 @@
+version: '3.5'
+
+services:
+  postgre-vs-mongo:
+    command: npm run debug
+    ports:
+    - 3000:3000 
+    - 9229:9229
