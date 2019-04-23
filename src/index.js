@@ -19,8 +19,10 @@ app.get('/pg', async function (req, res) {
 
 app.get('/mongo', async function (req, res) {
   const mongo = new MongoService();
-  mongo.connect()
-  res.send("Success.")
+  await mongo.connect();
+  await mongo.runCommand();
+  await mongo.close();
+  res.send("Success!");
 });
 
 app.get('/fake', function (req, res){
