@@ -25,11 +25,11 @@ module.exports = class MongoService {
 
   async runCommand() {
     try{
-      // const hrstart = process.hrtime()
+      const hrstart = process.hrtime();
       const r = await this.db.collection('test').insertOne({ a: 1 });
       // const r = await this.db.collection('test').find({a:{$eq: 1}});      
-      // const hrend = process.hrtime(hrstart)
-      // console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000)
+      const hrend = process.hrtime(hrstart);
+      console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
     }
     catch(e){
       console.log(e);

@@ -18,9 +18,12 @@ module.exports = class PostgreService {
   async createData(faker) {
     // this.client.query('CREATE TABLE project (ID serial NOT NULL PRIMARY KEY, data json NOT NULL);');
     try {
-      const data = faker.getUpdateJson(2, 2);
-      await this.client.query('INSERT INTO project (data) VALUES ($1)', [JSON.stringify(data)]);
+      const data = JSON.stringify(faker.getUpdateJson(2, 0));
+      await this.client.query('INSERT INTO project (data) VALUES (json_array_elements($1))', [data]);
+      const hrstart = process.hrtime();
       const result = await this.client.query('SELECT * FROM project');
+      const hrend = process.hrtime(hrstart);
+      console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
       return result.rows;
     } catch (e) {
       console.error(e);
