@@ -1,4 +1,5 @@
 const { Client } = require('pg');
+const { measure } = require('./../utils');
 
 module.exports = class PostgreService {
   constructor() {
@@ -16,14 +17,11 @@ module.exports = class PostgreService {
   }
 
   async createData(faker) {
-    // this.client.query('CREATE TABLE project (ID serial NOT NULL PRIMARY KEY, data json NOT NULL);');
+    // this.client.query('CREATE TABLE project (ID serial NOT NULL PRIMARY KEY, data jsonb NOT NULL);');
     try {
       const data = JSON.stringify(faker.getUpdateJson(2, 0));
-      await this.client.query('INSERT INTO project (data) VALUES (json_array_elements($1))', [data]);
-      const hrstart = process.hrtime();
+      measure(async () => { await this.client.query('INSERT INTO project (data) VALUES (json_array_elements($1))', [data]) });      
       const result = await this.client.query('SELECT * FROM project');
-      const hrend = process.hrtime(hrstart);
-      console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
       return result.rows;
     } catch (e) {
       console.error(e);
