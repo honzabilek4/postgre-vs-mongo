@@ -4,7 +4,7 @@ const measure = (exec) => {
     exec();
     const end = process.hrtime.bigint();
     const executionTime = (end - start)/1000n; //convert to ms
-    console.info('Execution time (hr): %sµs', executionTime);
+    console.log('Execution time (hr): %sµs', executionTime);
     return executionTime;
 }
 

@@ -45,4 +45,13 @@ app.get('/createData', async function (req, res) {
   res.send(result);
 });
 
+app.get('/createMongoData', async function (req, res) {
+  const faker = new FakerService();
+  const mongo = new MongoService();
+  await mongo.connect();
+  const result = mongo.createData(faker);
+  await mongo.close();
+  res.send(result);
+});
+
 app.listen(3000);

@@ -22,12 +22,11 @@ module.exports = class FakerService {
             let price = Faker.commerce.price();
             let nestedTrash = {'users': this.getUsers(amount)};
 
-            for (let id=1; id <= nesting; id++) {
+            for (let i=1; i <= nesting; i++) {
                 nestedTrash = {'trash': nestedTrash};
             }
 
             data.push({
-                "id": id,
                 "first_name": firstName,
                 "last_name": lastName,
                 "email": email,

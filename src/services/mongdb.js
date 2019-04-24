@@ -36,4 +36,31 @@ module.exports = class MongoService {
     }
     return "Running command.";
   }
+
+  async createData(faker) {
+      // plus create collection if needed
+      try {
+          // const data = JSON.parse(JSON.stringify((faker.getUpdateJson(1, 0))));
+          // const result1 = await this.db.collection('test').insertOne(data);
+          // const result2 = await this.db.collection('test').insertOne({
+          //     Employeeid: 4,
+          //     EmployeeName: "NewEmployee"
+          // });
+          // let str = "";
+          // result.forEach(
+          //       function (item) {
+          //           if (item != null) {
+          //               str = str + item.first_name;
+          //           }
+          //       }
+          // );
+          // return str;
+          const result = [];
+          return await this.db.collection('test').find({}).toArray(function(err, docs) {
+              result.push(docs);
+          });
+      } catch (e) {
+          console.error(e);
+      }
+  }
 }; 
