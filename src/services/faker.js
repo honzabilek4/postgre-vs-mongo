@@ -17,6 +17,9 @@ module.exports = class FakerService {
             let firstName = Faker.name.firstName();
             let lastName = Faker.name.lastName();
             let email = Faker.internet.email();
+            let department = Faker.commerce.department();
+            let product = Faker.commerce.product();
+            let price = Faker.commerce.price();
             let nestedTrash = {'users': this.getUsers(amount)};
 
             for (let id=1; id <= nesting; id++) {
@@ -28,6 +31,9 @@ module.exports = class FakerService {
                 "first_name": firstName,
                 "last_name": lastName,
                 "email": email,
+                "department": department,
+                "product": product,
+                "price": price,
                 'trash': nestedTrash
             });
         }
