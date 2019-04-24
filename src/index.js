@@ -28,20 +28,21 @@ app.get('/mongo', async function (req, res) {
   res.send("Success!");
 });
 
-app.get('/fake', function (req, res) {
+app.get('/fake', async function (req, res) {
   const faker = new FakerService();
   res.send(faker.getUsers(1000000));
 });
 
-app.get('/updateJson', function (req, res) {
+app.get('/updateJson', async function (req, res) {
   const faker = new FakerService();
   res.send(faker.getUpdateJson(100, 50));
 });
 
-app.get('/createData', function (req, res) {
+app.get('/createData', async function (req, res) {
   const faker = new FakerService();
   const pg = new PostgreService();
-  res.send(pg.createData(faker));
+  const result =  await pg.createData(faker);
+  res.send(result);
 });
 
 app.listen(3000);

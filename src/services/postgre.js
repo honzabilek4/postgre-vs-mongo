@@ -16,9 +16,14 @@ module.exports = class PostgreService {
   }
 
   async createData(faker) {
-    this.client.query('CREATE TABLE project (ID serial NOT NULL PRIMARY KEY, data json NOT NULL);');
-    this.client.query('INSERT INTO project (data) VALUES' + faker.getUpdateJson());
-    const result = await this.client.query('SELECT * FROM project');    
-    return result.rows;
+    // this.client.query('CREATE TABLE project (ID serial NOT NULL PRIMARY KEY, data json NOT NULL);');
+    try {
+      const data = faker.getUpdateJson(2, 2);
+      await this.client.query('INSERT INTO project (data) VALUES ($1)', [JSON.stringify(data)]);
+      const result = await this.client.query('SELECT * FROM project');
+      return result.rows;
+    } catch (e) {
+      console.error(e);
+    }
   }
 };
