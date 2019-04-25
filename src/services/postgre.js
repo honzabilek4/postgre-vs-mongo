@@ -44,7 +44,7 @@ module.exports = class PostgreService {
 
   async selectAllData() {
     try {
-      const duration = measure(async () => { await this.client.query('SELECT * FROM projects;') });
+      const duration = measure(async () => { await this.client.query('SELECT count(*) FROM projects;') });
       return duration;
     } catch (e) {
       console.error(e);

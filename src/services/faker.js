@@ -20,11 +20,11 @@ module.exports = class FakerService {
             let department = Faker.commerce.department();
             let product = Faker.commerce.product();
             let price = Faker.commerce.price();
-            let nestedTrash = {'users': this.getUsers(amount)};
+            // let nestedTrash = {'users': this.getUsers(amount)};
 
-            for (let i=1; i <= nesting; i++) {
-                nestedTrash = {'trash': nestedTrash};
-            }
+            // for (let i=1; i <= nesting; i++) {
+            //     nestedTrash = {'trash': nestedTrash};
+            // }
 
             data.push({
                 "first_name": firstName,
@@ -33,7 +33,7 @@ module.exports = class FakerService {
                 "department": department,
                 "product": product,
                 "price": price,
-                'trash': nestedTrash
+                // 'trash': nestedTrash
             });
         }
         return data;
