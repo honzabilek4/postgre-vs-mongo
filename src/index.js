@@ -17,7 +17,7 @@ app.get('/test', async function (req, res) {
   await pg.connect();
   await pg.initSchema();
   await pg.truncateSchema();
-  const data = faker.getRandomJson(200000, 1);
+  const data = faker.getRandomJson(200000, 0);
   let result = [];
   result.push(await pg.insertData(data));
   result.push(await pg.insertData(data));
@@ -33,8 +33,6 @@ app.get('/test2', async function (req, res) {
   const faker = new FakerService();
   await pg.connect();  
   let result = [];
-  result.push(await pg.selectAllData());  
-  result.push(await pg.selectAllData());  
   result.push(await pg.selectAllData());  
   result.push(await pg.selectAllData());  
   res.send(result);
