@@ -10,7 +10,7 @@ module.exports = class FakerService {
         });
     }
 
-    getUpdateJson(amount, nesting) {
+    getRandomJson(amount, nesting) {
         let data = [];
         for (let id=1; id <= amount; id++) {
 

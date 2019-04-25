@@ -11,46 +11,26 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/pg', async function (req, res) {
+app.get('/test', async function (req, res) {
   const pg = new PostgreService();
-  const result = await pg.runCommand();
+  const faker = new FakerService();
+  await pg.connect();  
+  await pg.initSchema();
+  await pg.truncateSchema();
+  const data = faker.getRandomJson(200, 1);  
+  let result = [];    
+  result.push(await pg.insertData(data));    
+  result.push(await pg.insertData(data));  
+  result.push(await pg.insertData(data));  
+  result.push(await pg.insertData(data));  
+  result.push(await pg.insertData(data));  
   res.send(result);
 });
 
-app.get('/mongo', async function (req, res) {
-  const mongo = new MongoService();
-  await mongo.connect();
-  const hrstart = process.hrtime()
-  await mongo.runCommand();
-  const hrend = process.hrtime(hrstart)
-  console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000)
-  await mongo.close();
-  res.send("Success!");
-});
-
-app.get('/fake', async function (req, res) {
-  const faker = new FakerService();
-  res.send(faker.getUsers(1000000));
-});
-
-app.get('/updateJson', async function (req, res) {
-  const faker = new FakerService();
-  res.send(faker.getUpdateJson(100, 50));
-});
-
-app.get('/createData', async function (req, res) {
-  const faker = new FakerService();
-  const pg = new PostgreService();
-  const result =  await pg.createData(faker);
-  res.send(result);
-});
-
-app.get('/createMongoData', async function (req, res) {
-  const faker = new FakerService();
-  const mongo = new MongoService();
-  await mongo.connect();
-  const result = mongo.createData(faker);
-  await mongo.close();
+app.get('/clear', async function (req, res) {
+  const pg = new PostgreService();  
+  await pg.connect();
+  const result = await pg.dropSchema();  
   res.send(result);
 });
 
