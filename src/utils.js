@@ -1,7 +1,7 @@
 
-const measure = (exec) => {
+const measure = async (exec) => {
     const start = process.hrtime.bigint();
-    exec();
+    await exec();
     const end = process.hrtime.bigint();
     const executionTime = end - start;
     console.log(`Execution time (hr): ${executionTime}ns`);
