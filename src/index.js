@@ -38,6 +38,17 @@ app.get('/test2', async function (req, res) {
   res.send(result);
 });
 
+
+app.get('/test3', async function(req,res){
+  const mongo = new MongoService();
+  const faker = new FakerService();
+  await mongo.connect();
+  const data = faker.getRandomJson(2000, 0);
+  let result = [];
+  result.push(await mongo.insertData(data));  
+  res.send(result);
+});
+
 app.get('/clear', async function (req, res) {
   const pg = new PostgreService();
   await pg.connect();
