@@ -10,8 +10,8 @@ services:
     environment:
       NODE_ENV: development
     volumes: 
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - .:/c/Documents and Settings/nay/Documents/Skola/PA036/postgre-vs-mongo
+      - /c/Documents and Settings/nay/Documents/Skola/PA036/postgre-vs-mongo/node_modules
     ports:
       - 3000:3000    
     command: npm start    
