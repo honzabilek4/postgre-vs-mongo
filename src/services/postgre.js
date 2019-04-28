@@ -129,4 +129,57 @@ module.exports = class PostgreService {
           console.error(e);
       }
   }
+  
+  async del(key){
+      try {
+      const duration = measure(async () => {await this.client.query("DELETE FROM projects WHERE data->>'last_name' = '"+key+"';")});
+      return duration;
+    } catch(e) {
+      console.error(e);
+    }
+  }
+  
+     async between(l,h){
+      try {
+      const duration = measure(async () => {await this.client.query("SELECT * FROM projects WHERE cast(data->>'number' as integer) BETWEEN "+l+" AND "+h+";")});
+      return duration;
+    } catch(e) {
+      console.error(e);
+    }
+  }
+  
+  async create_last_name_index() {
+      try {
+          await this.client.query("CREATE INDEX ln_idx ON projects((data->>'last_name'));");
+      } catch(e) {
+          console.error(e);
+      }
+  }
+
+  async drop_last_name_index() {
+      try {
+          await this.client.query("DROP INDEX ln_idx;");
+      } catch (e) {
+          console.error(e);
+      }
+  }
+  
+  
+    async create_number_index() {
+      try {
+          await this.client.query("CREATE INDEX num_idx ON projects USING gin(data);");
+      } catch(e) {
+          console.error(e);
+      }
+  }
+
+  async drop_number_index() {
+      try {
+          await this.client.query("DROP INDEX num_idx;");
+      } catch (e) {
+          console.error(e);
+      }
+  }
+  
+  
 };

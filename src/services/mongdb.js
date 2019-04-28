@@ -135,4 +135,58 @@ module.exports = class MongoService {
           console.error(e);
       }
   }
+  
+    async del(key){
+      var query = {"last_name" : key};
+      try {
+          const duration = measure(async () => {await this.db.collection('projects').deleteMany(query)});
+            return duration;
+      } catch (e) {
+          console.error(e);
+      }
+  }
+  
+    
+  async between(l,h){
+      var query = {"number" : {"$gt" :  l, "$lt" : h}};
+      try {
+          const duration = measure(async () => {await this.db.collection('projects').find(query)});
+           return duration;
+      } catch (e) {
+          console.error(e);
+      }
+  }
+  
+    async create_last_name_index() {
+      try {
+          await this.db.collection('projects').createIndex({last_name: 1}, {name: "ln_idx"});
+      } catch (e) {
+          console.error(e);
+      }
+  }
+  
+   async drop_last_name_index() {
+      try {
+          await this.db.collection('projects').dropIndex("ln_idx");
+      } catch (e) {
+          console.error(e);
+      }
+  }
+    
+    async create_number_index() {
+      try {
+          await this.db.collection('projects').createIndex({number: 1}, {name: "num_idx"});
+      } catch (e) {
+          console.error(e);
+      }
+  }
+  
+   async drop_number_index() {
+      try {
+          await this.db.collection('projects').dropIndex("num_idx");
+      } catch (e) {
+          console.error(e);
+      }
+  }
+  
 };
