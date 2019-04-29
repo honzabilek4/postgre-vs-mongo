@@ -20,6 +20,7 @@ module.exports = class FakerService {
             let department = Faker.commerce.department();
             let product = Faker.commerce.product();
             let price = Number(Faker.commerce.price());
+            let number = Number(Faker.random.number());
             let nestedTrash =  Faker.lorem.words();
 
             for (let i = 1; i <= nesting; i++) {
@@ -33,6 +34,7 @@ module.exports = class FakerService {
                 "department": department,
                 "product": product,
                 "price": price,
+                "number":number,
                 'trash': nestedTrash
             });
         }
