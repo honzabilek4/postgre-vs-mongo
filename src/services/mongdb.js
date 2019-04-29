@@ -120,6 +120,16 @@ module.exports = class MongoService {
     }
   }
 
+  async test_select_like() {
+      try {
+          return measure(async () => {
+              await this.db.collection('projects').find({department: {$regex: '^B'}});
+          })
+      } catch (e) {
+          console.error(e);
+      }
+  }
+
   async create_department_index() {
       try {
           await this.db.collection('projects').createIndex({department: 1}, {name: "dep_idx"});

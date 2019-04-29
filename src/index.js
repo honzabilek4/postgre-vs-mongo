@@ -445,4 +445,69 @@ app.get('/testRange1', async function (req, res) {
   });
 });
 
+app.get('/testSelectLike1', async function(req, res){
+//    select-like bez indexu
+    const pg = new PostgreService();
+    const mongo = new MongoService();
+    const faker = new FakerService();
+
+    let pg_result = [];
+    let mongo_result = [];
+
+    await pg.connect();
+    await pg.initSchema();
+    await mongo.connect();
+
+    await pg.truncateSchema();
+    const data = faker.getRandomJson(2000, 0);
+    await pg.insertData(data);
+    await mongo.removeDocuments();
+    await mongo.insertData(data);
+
+    for (let i = 1; i <= 10; i++) {
+        pg_result.push(await pg.test_select_like());
+        mongo_result.push(await mongo.test_select_like());
+    }
+
+    res.send({
+        pg: pg_result,
+        mongo: mongo_result
+    });
+});
+
+app.get('/testSelectLike2', async function(req, res) {
+//    select s indexom
+    const pg = new PostgreService();
+    const mongo = new MongoService();
+    const faker = new FakerService();
+
+    let pg_result = [];
+    let mongo_result = [];
+
+    await pg.connect();
+    await pg.initSchema();
+    await mongo.connect();
+
+    await pg.truncateSchema();
+    const data = faker.getRandomJson(2000, 0);
+    await pg.insertData(data);
+    await mongo.removeDocuments();
+    await mongo.insertData(data);
+    await pg.create_department_index();
+    await mongo.create_department_index();
+
+    for (let i = 1; i <= 10; i++) {
+        pg_result.push(await pg.test_select_like());
+        mongo_result.push(await mongo.test_select_like());
+    }
+
+    await pg.drop_department_index();
+    await mongo.drop_department_index();
+
+    res.send({
+        pg: pg_result,
+        mongo: mongo_result
+    });
+});
+
 app.listen(3000);

@@ -114,6 +114,15 @@ module.exports = class PostgreService {
     }
   }
 
+  async test_select_like() {
+    try{
+      const duration = measure(async () => {await this.client.query("SELECT * FROM projects WHERE data->>'department' LIKE 'B%';")});
+      return duration;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   async create_department_index() {
       try {
           await this.client.query("CREATE INDEX dep_idx ON projects((data->>'department'));");
@@ -180,6 +189,5 @@ module.exports = class PostgreService {
           console.error(e);
       }
   }
-  
   
 };
