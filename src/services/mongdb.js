@@ -36,9 +36,9 @@ module.exports = class MongoService {
 
   async removeDocuments() {
       try {
-          await this.db.collection('projects').remove({});
+         return await this.db.collection('projects').deleteMany({});
       } catch (e) {
-          console.error(e);
+            console.error(e);
       }
   }
 
