@@ -72,12 +72,10 @@ module.exports = class PostgreService {
     }
   }
 
-  async update3(data) {
+  async update2(data) {
   //  full update bez zanoreni a so zanorenim - iba ine data rovnaky dotaz
     try {
-      const serializedData = JSON.stringify(data);
       const first_json = JSON.stringify(data[0]);
-      // const duration = measure( async () => {await this.client.query("UPDATE project SET data = (json_array_elements($1))", [serializedData])});
       const duration = measure( async () => {await this.client.query("UPDATE projects SET data = ($1)", [first_json])});
       return duration;
     } catch(e) {
