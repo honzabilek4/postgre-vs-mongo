@@ -16,63 +16,6 @@ const LARGE = 200000;
 const ITERATIONS = 10;
 const UPDATE_NESTING = 50;
 
-app.get('/', (req, res) => {
-  res.send('postgres-vs-mongo example app');
-});
-
-app.get('/insert', async (req, res) => {
-  const test = new TestInsert();
-  let result = {};
-  result["small"] = await test.runTest(SMALL, ITERATIONS);
-  result["medium"] = await test.runTest(MEDIUM, ITERATIONS);
-  result["large"] = await test.runTest(LARGE, ITERATIONS);
-  res.send(result);
-});
-
-app.get('/select', async (req, res) => {
-  
-});
-
-app.get('/update1', async function (req, res) {
-  //  partial update bez zanoreni
-  const test = new TestUpdate();
-  let result = [];
-  result["small"] = await test.runTest(SMALL, 0, ITERATIONS, true);
-  result["medium"] = await test.runTest(MEDIUM, 0, ITERATIONS, true);
-  result["large"] = await test.runTest(LARGE, 0, ITERATIONS, true);
-  res.send(result);
-});
-
-app.get('/update2', async function (req, res) {
-  //  partial update so zanoreniami
-  const test = new TestUpdate();
-  let result = [];
-  result["small"] = await test.runTest(SMALL, UPDATE_NESTING, ITERATIONS, true);
-  result["medium"] = await test.runTest(MEDIUM, UPDATE_NESTING, ITERATIONS, true);
-  result["large"] = await test.runTest(LARGE, UPDATE_NESTING, ITERATIONS, true);
-  res.send(result);
-});
-
-app.get('/update3', async function (req, res) {
-  //    full update bez zanoreni
-  const test = new TestUpdate();
-  let result = [];
-  result["small"] = await test.runTest(SMALL, 0, ITERATIONS, false);
-  result["medium"] = await test.runTest(MEDIUM, 0, ITERATIONS, false);
-  result["large"] = await test.runTest(LARGE, 0, ITERATIONS, false);
-  res.send(result);
-});
-
-app.get('/update4', async function (req, res) {
-  //    full update so zanoreniami
-  const test = new TestUpdate();
-  let result = [];
-  result["small"] = await test.runTest(SMALL, UPDATE_NESTING, ITERATIONS, false);
-  result["medium"] = await test.runTest(MEDIUM, UPDATE_NESTING, ITERATIONS, false);
-  result["large"] = await test.runTest(LARGE, UPDATE_NESTING, ITERATIONS, false);
-  res.send(result);
-});
-
 app.get('/testAgg1', async function (req, res) {
   //    vsetky tri agregacie bez indexu
   const test = new TestAggregation();
@@ -86,27 +29,6 @@ app.get('/testAgg1', async function (req, res) {
 app.get('/testAgg2', async function (req, res) {
   //    vsetky tri agregacie s indexom
   const test = new TestAggregation();
-  let result = [];
-  result["small"] = await test.runTest(SMALL, ITERATIONS, true);
-  result["medium"] = await test.runTest(MEDIUM, ITERATIONS, true);
-  result["large"] = await test.runTest(LARGE, ITERATIONS, true);
-  res.send(result);
-});
-
-
-app.get('/testSelectLike1', async function (req, res) {
-  //    select-like bez indexu
-  const test = new TestSelectLike();
-  let result = [];
-  result["small"] = await test.runTest(SMALL, ITERATIONS, false);
-  result["medium"] = await test.runTest(MEDIUM, ITERATIONS, false);
-  result["large"] = await test.runTest(LARGE, ITERATIONS, false);
-  res.send(result);
-});
-
-app.get('/testSelectLike2', async function (req, res) {
-  //    select s indexom
-  const test = new TestSelectLike();
   let result = [];
   result["small"] = await test.runTest(SMALL, ITERATIONS, true);
   result["medium"] = await test.runTest(MEDIUM, ITERATIONS, true);
@@ -324,20 +246,6 @@ app.get('/testRange1', async function (req, res) {
     mongo: mongo_result
 
   });
-});
-
-app.get('/clearPg', async function (req, res) {
-  const pg = new PostgreService();
-  await pg.connect();
-  const result = await pg.dropSchema();
-  res.send(result);
-});
-
-app.get('/clearMongo', async function (req, res) {
-  const mongo = new MongoService();
-  await mongo.connect();
-  const result = await mongo.removeDocuments();
-  res.send(result);
 });
 
 app.listen(3000);
