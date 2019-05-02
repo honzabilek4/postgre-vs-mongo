@@ -34,6 +34,16 @@ module.exports = class MongoService {
     }
   }
 
+  async selectAllData() {
+    try {
+        return measure(async () => {
+          await this.db.collection('projects').find().toArray();
+        });
+      } catch (e) {
+        console.error(e);
+      }
+  }
+
   async removeDocuments() {
       try {
          return await this.db.collection('projects').deleteMany({});
@@ -123,7 +133,7 @@ module.exports = class MongoService {
   async test_select_like() {
       try {
           return measure(async () => {
-              await this.db.collection('projects').find({department: {$regex: '^B'}});
+              await this.db.collection('projects').find({department: {$regex: '^B'}}).toArray();
           })
       } catch (e) {
           console.error(e);

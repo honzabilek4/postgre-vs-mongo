@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/honzabilek4/postgre-vs-mongo#readme",
   "dependencies": {
+    "commander": "^2.20.0",
     "express": "^4.16.4",
     "faker": "^4.1.0",
     "mongodb": "^3.2.2",

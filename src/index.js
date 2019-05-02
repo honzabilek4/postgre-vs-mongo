@@ -33,7 +33,7 @@ app.get('/select', async (req, res) => {
   
 });
 
-app.get('/testUpdate1', async function (req, res) {
+app.get('/update1', async function (req, res) {
   //  partial update bez zanoreni
   const test = new TestUpdate();
   let result = [];
@@ -43,7 +43,7 @@ app.get('/testUpdate1', async function (req, res) {
   res.send(result);
 });
 
-app.get('/testUpdate2', async function (req, res) {
+app.get('/update2', async function (req, res) {
   //  partial update so zanoreniami
   const test = new TestUpdate();
   let result = [];
@@ -53,7 +53,7 @@ app.get('/testUpdate2', async function (req, res) {
   res.send(result);
 });
 
-app.get('/testUpdate3', async function (req, res) {
+app.get('/update3', async function (req, res) {
   //    full update bez zanoreni
   const test = new TestUpdate();
   let result = [];
@@ -63,7 +63,7 @@ app.get('/testUpdate3', async function (req, res) {
   res.send(result);
 });
 
-app.get('/testUpdate4', async function (req, res) {
+app.get('/update4', async function (req, res) {
   //    full update so zanoreniami
   const test = new TestUpdate();
   let result = [];
