@@ -3,7 +3,7 @@ const PostgreService = require('../services/postgre');
 const FakerService = require('../services/faker');
 
 module.exports = class TestAggregation {
-    async runTest(dataSize, iterations, withIndex) {
+    async runTest(dataSize, iterations) {
         try {
             const pg = new PostgreService();
             const faker = new FakerService();
@@ -25,11 +25,6 @@ module.exports = class TestAggregation {
             await mongo.removeDocuments();
             await mongo.insertData(data);
 
-            if (withIndex) {
-                await pg.create_department_index();
-                await mongo.create_department_index();
-            }
-
             for (let i = 1; i <= iterations; i++) {
                 pg_result_count.push(await pg.test_count());
                 pg_result_sum.push(await pg.test_sum());
@@ -37,11 +32,6 @@ module.exports = class TestAggregation {
                 mongo_result_count.push(await mongo.test_count());
                 mongo_result_sum.push(await mongo.test_sum());
                 mongo_result_max.push(await mongo.test_max());
-            }
-
-            if (withIndex) {
-                await pg.drop_department_index();
-                await mongo.drop_department_index();
             }
 
             return {

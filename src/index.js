@@ -16,23 +16,13 @@ const LARGE = 200000;
 const ITERATIONS = 10;
 const UPDATE_NESTING = 50;
 
-app.get('/testAgg1', async function (req, res) {
-  //    vsetky tri agregacie bez indexu
+app.get('/testAgg', async function (req, res) {
+  //    test COUNT, SUM and MAX
   const test = new TestAggregation();
   let result = [];
   result["small"] = await test.runTest(SMALL, ITERATIONS, false);
   result["medium"] = await test.runTest(MEDIUM, ITERATIONS, false);
   result["large"] = await test.runTest(LARGE, ITERATIONS, false);
-  res.send(result);
-});
-
-app.get('/testAgg2', async function (req, res) {
-  //    vsetky tri agregacie s indexom
-  const test = new TestAggregation();
-  let result = [];
-  result["small"] = await test.runTest(SMALL, ITERATIONS, true);
-  result["medium"] = await test.runTest(MEDIUM, ITERATIONS, true);
-  result["large"] = await test.runTest(LARGE, ITERATIONS, true);
   res.send(result);
 });
 

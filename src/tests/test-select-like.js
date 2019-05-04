@@ -23,8 +23,8 @@ module.exports = class TestSelectLike {
             await mongo.insertData(data);
 
             if (withIndex) {
-                await pg.create_department_index();
-                await mongo.create_department_index();
+                await pg.create_email_index();
+                await mongo.create_email_index();
             }
 
             for (let i = 1; i <= iterations; i++) {
@@ -32,8 +32,8 @@ module.exports = class TestSelectLike {
                 mongo_result.push(await mongo.test_select_like());
             }
             if (withIndex) {
-                await pg.drop_department_index();
-                await mongo.drop_department_index();
+                await pg.drop_email_index();
+                await mongo.drop_email_index();
             }
 
             return {

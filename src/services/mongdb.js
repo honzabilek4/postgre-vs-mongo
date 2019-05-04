@@ -99,7 +99,7 @@ module.exports = class MongoService {
                   :
                       1
                   }
-              }}]);
+              }}]).toArray();
           });
       } catch (e) {
           console.error(e);
@@ -110,7 +110,7 @@ module.exports = class MongoService {
     try {
         return measure(async () => {
             await this.db.collection('projects').aggregate([
-                {"$group": {"_id": "$department", "total": {"$sum": "$price"}}}]);
+                {"$group": {"_id": "$department", "total": {"$sum": "$price"}}}]).toArray();
 
         })
     } catch (e) {
@@ -122,7 +122,7 @@ module.exports = class MongoService {
     try {
         return measure(async () => {
             await this.db.collection('projects').aggregate([
-                {$group: {_id: "$department", max_value: {$max: "$price"}}}]);
+                {$group: {_id: "$department", max_value: {$max: "$price"}}}]).toArray();
 
         })
     } catch (e) {
@@ -133,24 +133,24 @@ module.exports = class MongoService {
   async test_select_like() {
       try {
           return measure(async () => {
-              await this.db.collection('projects').find({department: {$regex: '^B'}}).toArray();
+              await this.db.collection('projects').find({email: {$regex: '^La'}}).toArray();
           })
       } catch (e) {
           console.error(e);
       }
   }
 
-  async create_department_index() {
+  async create_email_index() {
       try {
-          await this.db.collection('projects').createIndex({department: 1}, {name: "dep_idx"});
+          await this.db.collection('projects').createIndex({email: 1}, {name: "email_idx"});
       } catch (e) {
           console.error(e);
       }
   }
 
-  async drop_department_index() {
+  async drop_email_index() {
       try {
-          await this.db.collection('projects').dropIndex("dep_idx");
+          await this.db.collection('projects').dropIndex("email_idx");
       } catch (e) {
           console.error(e);
       }

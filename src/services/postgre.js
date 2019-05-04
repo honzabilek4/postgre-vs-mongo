@@ -19,7 +19,6 @@ module.exports = class PostgreService {
 
   async initSchema() {
     try {
-      // TODO table sa bude volat projects alebo project
       await this.client.query('CREATE TABLE IF NOT EXISTS projects (ID serial NOT NULL PRIMARY KEY, data jsonb NOT NULL);');
     } catch (e) {
       console.error(e);
@@ -63,7 +62,6 @@ module.exports = class PostgreService {
   }
 
   async update1() {
-    // partial update bez zanoreni a so zanorenim - iba ine data, rovnaky dotaz
     try {
       const duration = measure(async () => {await this.client.query("UPDATE projects SET data = jsonb_set(data::jsonb, '{price}'::text[], (COALESCE(data->>'price','0')::real + 1)::text::jsonb);")});
       return duration;
@@ -73,7 +71,6 @@ module.exports = class PostgreService {
   }
 
   async update2(data) {
-  //  full update bez zanoreni a so zanorenim - iba ine data rovnaky dotaz
     try {
       const first_json = JSON.stringify(data[0]);
       const duration = measure( async () => {await this.client.query("UPDATE projects SET data = ($1)", [first_json])});
@@ -84,7 +81,6 @@ module.exports = class PostgreService {
   }
 
   async test_count() {
-    // test for using count function s indexom a bez indexu na GROUP BY a atribute - ten isty dotaz iba sa medzi tym vytvori index
     try {
       const duration = measure(async () => {await this.client.query("SELECT data->>'department', COUNT(*) FROM projects GROUP BY data->>'department';")});
       return duration;
@@ -94,7 +90,6 @@ module.exports = class PostgreService {
   }
 
   async test_sum() {
-    // test for using sum function s indexom a bez indexu na GROUP BY atribute - ten isty dotaz
     try {
       const duration = measure(async () => {await this.client.query("SELECT data->>'department', SUM((data->>'price')::real) FROM projects GROUP BY data->>'department';")});
       return duration;
@@ -114,24 +109,24 @@ module.exports = class PostgreService {
 
   async test_select_like() {
     try{
-      const duration = measure(async () => {await this.client.query("SELECT * FROM projects WHERE data->>'department' LIKE 'B%';")});
+      const duration = measure(async () => {await this.client.query("SELECT * FROM projects WHERE (data->>'email') LIKE 'La%';")});
       return duration;
     } catch (e) {
       console.error(e);
     }
   }
 
-  async create_department_index() {
+  async create_email_index() {
       try {
-          await this.client.query("CREATE INDEX dep_idx ON projects((data->>'department'));");
+          await this.client.query("CREATE INDEX email_idx ON projects((data->>'email') text_pattern_ops);")
       } catch(e) {
           console.error(e);
       }
   }
 
-  async drop_department_index() {
+  async drop_email_index() {
       try {
-          await this.client.query("DROP INDEX dep_idx;");
+          await this.client.query("DROP INDEX email_idx;");
       } catch (e) {
           console.error(e);
       }

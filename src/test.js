@@ -12,7 +12,7 @@ const SMALL = 200;
 const MEDIUM = 20000;
 const LARGE = 200000;
 const ITERATIONS = 10;
-const UPDATE_NESTING = 50;
+const UPDATE_NESTING = 5;
 
 program
     .command('insert')
@@ -96,7 +96,7 @@ program
 
 program
     .command('update-partial-nest')
-    .description('Test partial update')
+    .description('Test partial update with nesting')
     .action(async () => {
         const test = new TestUpdate();
         let result = [];
@@ -112,7 +112,7 @@ program
 
 program
     .command('update-full')
-    .description('Test partial update')
+    .description('Test full update')
     .action(async () => {
         const test = new TestUpdate();
         let result = [];
@@ -128,7 +128,7 @@ program
 
 program
     .command('update-full-nest')
-    .description('Test partial update')
+    .description('Test full update with nesting')
     .action(async () => {
         const test = new TestUpdate();
         let result = [];
@@ -140,6 +140,22 @@ program
         result["large"] = await test.runTest(LARGE, UPDATE_NESTING, ITERATIONS, false);
         console.log(result);
         process.exit();
+    });
+
+program
+    .command('aggregation')
+    .description('Test plain aggregation')
+    .action(async () => {
+            const test = new TestAggregation();
+            let result = [];
+            console.log("Testing small data..");
+            result["small"] = await test.runTest(SMALL, ITERATIONS);
+            console.log("Testing medium data..");
+            result["medium"] = await test.runTest(MEDIUM, ITERATIONS);
+            console.log("Testing large data..");
+            result["large"] = await test.runTest(LARGE, ITERATIONS);
+            console.log(result);
+            process.exit();
     });
 
 program
