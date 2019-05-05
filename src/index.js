@@ -26,4 +26,9 @@ app.get('/testAgg', async function (req, res) {
     res.send(result);
 });
 
+app.get('/json', async (req,res)=>{
+    const faker = new FakerService();
+    res.send(faker.getRandomJson(1,1));
+});
+
 app.listen(3000);
