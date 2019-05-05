@@ -170,7 +170,7 @@ module.exports = class MongoService {
   async between(l,h){
       var query = {"number" : {"$gt" :  l, "$lt" : h}};
       try {
-          const duration = measure(async () => {await this.db.collection('projects').find(query)});
+          const duration = measure(async () => {await this.db.collection('projects').find(query).toArray()});
            return duration;
       } catch (e) {
           console.error(e);
