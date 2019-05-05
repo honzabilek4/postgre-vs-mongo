@@ -7,6 +7,8 @@ const TestSelect = require('./tests/test-select');
 const TestUpdate = require('./tests/test-update');
 const TestAggregation = require('./tests/test-aggregation');
 const TestSelectLike = require('./tests/test-select-like');
+const TestDelete = require('./tests/test-delete');
+const TestRange = require('./tests/test-range');
 
 const SMALL = 200;
 const MEDIUM = 20000;
@@ -156,6 +158,71 @@ program
             result["large"] = await test.runTest(LARGE, ITERATIONS);
             console.log(result);
             process.exit();
+    });
+    
+    
+    program
+            .command('delete')
+            .description('Test delete')
+            .action(async () => {
+                const test = new TestDelete();
+                let result = [];
+                console.log("Testing small data..");
+                result["small"] = await test.runTest(SMALL, ITERATIONS,false);
+                console.log("Testing medium data..");
+                result["medium"] = await test.runTest(MEDIUM, ITERATIONS,false);
+                console.log("Testing large data..");
+                result["large"] = await test.runTest(LARGE, ITERATIONS,false);
+                console.log(result);
+                process.exit();
+    });
+    
+        program
+            .command('delete-index')
+            .description('Test delete using index')
+            .action(async () => {
+                const test = new TestDelete();
+                let result = [];
+                console.log("Testing small data..");
+                result["small"] = await test.runTest(SMALL, ITERATIONS,true);
+                console.log("Testing medium data..");
+                result["medium"] = await test.runTest(MEDIUM, ITERATIONS,true);
+                console.log("Testing large data..");
+                result["large"] = await test.runTest(LARGE, ITERATIONS,true);
+                console.log(result);
+                process.exit();
+    });
+    
+    program
+            .command('range')
+            .description('Test range query')
+            .action(async () => {
+                const test = new TestRange();
+                let result = [];
+                console.log("Testing small data..");
+                result["small"] = await test.runTest(SMALL, ITERATIONS,false);
+                console.log("Testing medium data..");
+                result["medium"] = await test.runTest(MEDIUM, ITERATIONS,false);
+                console.log("Testing large data..");
+                result["large"] = await test.runTest(LARGE, ITERATIONS,false);
+                console.log(result);
+                process.exit();
+    });
+    
+    program
+            .command('range-index')
+            .description('Test range query using index')
+            .action(async () => {
+                const test = new TestRange();
+                let result = [];
+                console.log("Testing small data..");
+                result["small"] = await test.runTest(SMALL, ITERATIONS,true);
+                console.log("Testing medium data..");
+                result["medium"] = await test.runTest(MEDIUM, ITERATIONS,true);
+                console.log("Testing large data..");
+                result["large"] = await test.runTest(LARGE, ITERATIONS,true);
+                console.log(result);
+                process.exit();
     });
 
 program
