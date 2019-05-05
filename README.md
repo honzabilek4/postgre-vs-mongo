@@ -11,7 +11,7 @@ docker-compose -f docker-compose.yml -f docker-compose.debug.yml up
 ## Run tests
 ### Enter the running container
 ```
-docker-compose exec postgre-vs-mogno /bin/bash
+docker-compose exec postgre-vs-mongo /bin/bash
 cd src 
 ```
 ### Get CLI options
